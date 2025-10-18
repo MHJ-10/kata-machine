@@ -20,25 +20,26 @@ export default function bs_list(haystack: number[], needle: number): boolean {
     return false;
 }
 
-// export const recursiveBinarySearch = (
-//     arr: number[],
-//     target: number,
-//     low: number,
-//     high: number,
-// ): boolean => {
-//     const mid = Math.floor(low + (high - low) / 2);
-//     const val = arr[mid];
+export const recursiveBinarySearch = (
+    arr: number[],
+    target: number,
+    low: number,
+    high: number,
+): boolean => {
+    const mid = Math.floor(low + (high - low) / 2);
+    const val = arr[mid];
 
-//     if (low < high) {
-//         if (val === target) return true;
+    if (low < high) {
+        if (val === target) return true;
 
-//         if (val > target) {
-//             recursiveBinarySearch(arr, target, low, mid);
-//         }
+        if (val > target) {
+            return recursiveBinarySearch(arr, target, low, mid);
+        }
 
-//         if (val < target) {
-//             recursiveBinarySearch(arr, target, mid + 1, high);
-//         }
-//     }
-//     return false;
-// };
+        if (val < target) {
+            return recursiveBinarySearch(arr, target, mid + 1, high);
+        }
+    }
+
+    return false;
+};
