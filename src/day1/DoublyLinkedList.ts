@@ -66,20 +66,32 @@ export default class DoublyLinkedList<T> {
         current.next = node;
         node.prev = current;
     }
-    // remove(item: T): T | undefined {
-    //     if (!this.head) return undefined;
+    remove(item: T): T | undefined {
+        if (!this.head) return undefined;
 
-    //     this.length--;
+        let targetIndex: number = -1;
+        let current = this.head;
 
-    //     const newHead = this.head.next;
-    //     if (newHead) {
-    //         newHead.prev = undefined;
-    //         this.head.next = undefined;
-    //         this.head = newHead;
-    //     }
+        if (current.value !== item) {
+            for (let i = 0; i < this.length; i++) {
+                if (current.next) current = current.next;
+                if (current.value === item) {
+                    targetIndex = i + 1;
+                    break;
+                }
+            }
+        } else {
+            targetIndex = 0;
+        }
 
-    //     return item;
-    // }
+        if (targetIndex < 0) return undefined;
+
+        console.log(targetIndex);
+
+        this.removeAt(targetIndex);
+
+        return item;
+    }
     get(idx: number): T | undefined {
         if (idx === 0) return this.head?.value;
         if (idx >= this.length || !this.head) return undefined;
@@ -120,10 +132,19 @@ export default class DoublyLinkedList<T> {
 
 const list = new DoublyLinkedList<number>();
 
-for (let i = 1; i < 5; i++) {
-    list.append(i);
-}
+list.append(5);
 
-const val = list.get(3);
+list.append(7);
 
-console.log(val);
+list.append(9);
+
+// list.get(2);
+// list.removeAt(1);
+// list.length;
+
+// list.append(11);
+// list.removeAt(1);
+// list.remove(9);
+// list.removeAt(0);
+// list.removeAt(0);
+// list.length;
