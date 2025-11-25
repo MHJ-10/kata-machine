@@ -18,6 +18,7 @@ export default class DoublyLinkedList<T> {
         this.length++;
         if (!this.head) {
             this.head = node;
+            return;
         }
 
         node.next = this.head;
@@ -86,8 +87,6 @@ export default class DoublyLinkedList<T> {
 
         if (targetIndex < 0) return undefined;
 
-        console.log(targetIndex);
-
         this.removeAt(targetIndex);
 
         return item;
@@ -110,9 +109,12 @@ export default class DoublyLinkedList<T> {
 
         this.length--;
 
-        let current = this.head;
-        for (let i = 0; i < idx; i++) {
-            current = current?.next;
+        let current: Node<T> | undefined = this.head;
+
+        if (idx !== 0) {
+            for (let i = 0; i < idx; i++) {
+                current = current?.next;
+            }
         }
 
         const currentPrev = current?.prev;
@@ -126,25 +128,12 @@ export default class DoublyLinkedList<T> {
             current.prev = undefined;
         }
 
+        if (idx === 0) {
+            this.head = currentNext;
+        }
+
+        if (!this.length) this.head = undefined;
+
         return current?.value;
     }
 }
-
-const list = new DoublyLinkedList<number>();
-
-list.append(5);
-
-list.append(7);
-
-list.append(9);
-
-// list.get(2);
-// list.removeAt(1);
-// list.length;
-
-// list.append(11);
-// list.removeAt(1);
-// list.remove(9);
-// list.removeAt(0);
-// list.removeAt(0);
-// list.length;
